@@ -2,8 +2,7 @@
 
 ## Learning Goals
 
-- Explain the concept of remembrance in object-oriented programming
-- Use class variables to remember, or store, instances of a class that are produced
+- Use class variables to store instances of a class
 
 ## Introduction
 
@@ -20,7 +19,7 @@ require our program to keep track of instances that are created.
 Luckily for us, Ruby allows us to do so by using class variables to store new
 instances as soon as they are created. Let's take a look together.
 
-## Using class variables to store instances of a class
+## Using Class Variables to Store Instances of a Class
 
 Imagine we are building an app that manages a user's music. Our app should keep
 track of all of the songs a user enters and allow our user to browse their
@@ -144,7 +143,7 @@ the instances that we just created:
 
 ```ruby
 Song.all
-  => NoMethodError: undefined method 'all' for Song:Class
+# => NoMethodError: undefined method 'all' for Song:Class
 ```
 
 Uh-oh, looks like we don't have a class method to access the contents of the
@@ -156,7 +155,7 @@ Let's build one now.
 
 #### Building a Class Method to Access a Class Variable
 
-Let's call our class method `#all`. All it needs to do is return the `@@all`
+Let's call our class method `.all`. All it needs to do is return the `@@all`
 variable. Remember that the last line of any method in Ruby is automatically
 _returned_. So simply putting `@@all` in `self.all` is that method's purpose.
 
@@ -193,15 +192,40 @@ Song.all
 This should output something like:
 
 ```ruby
-irb(main):020:0> Song.all
-=> [#<Song:0x00007fd9910c45a0 @name="99 Problems">, #<Song:0x00007fd9900dba58 @name="Thriller">]
+Song.all
+# => [#<Song:0x00007fd9910c45a0 @name="99 Problems">, #<Song:0x00007fd9900dba58 @name="Thriller">]
 ```
 
-#### Building off of `all`
+#### Building off of `.all`
 
-Implement a class method called `print_all_song_names` which prints out all the
-names of the `Song`s that the class knows about. Use the `all` class method and
-build off of it!
+With this one method defined, we can now build out more functionality in our
+class that involves the collection of all our songs, instead of just focusing on
+the song instances. For example, we could make a `.print_all_songs_names` class
+method which prints out all the names of the `Song`s that the class knows about:
+
+```rb
+class Song
+
+  @@all = []
+
+  attr_accessor :name
+
+  def initialize(name)
+    @name = name
+    @@all << self
+  end
+
+  def self.all
+    @@all
+  end
+
+  def self.print_all_song_names
+    self.all.each do |song|
+      puts song.name
+    end
+  end
+end
+```
 
 ## Conclusion
 
