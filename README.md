@@ -96,7 +96,7 @@ to ask: _how_ does it store these instances?
 Before we can answer this question, we should ask another. _When_ should the
 `Song` class become aware of, or store, an instance of itself?
 
-This should happen at the time on instantiation––when a new song gets created,
+This should happen at the time of instantiation––when a new song gets created,
 it should be immediately stored by our `Song` class' `@@all`class variable.
 
 We can implement this by simply adding the new instance that gets created into
