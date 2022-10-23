@@ -16,6 +16,7 @@ class Song
     @@all
   end
 
+  #building of of .all
 #to print all song names create a class method and iterate thru the accessed array to get each name
 
   def self.print_all_song_names
